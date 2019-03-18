@@ -11,7 +11,7 @@ images:
   script:
     - mkdir -p /root/.docker
     - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",\"password\":\"${CI_JOB_TOKEN}\"}}}" > /root/.docker/config.json
-    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile Dockerfile $DOCKER_PROXY --destination "${CI_REGISTRY_IMAGE}:latest"
+    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile Dockerfile --build-arg BUILDTAGS='containers_image_openpgp containers_image_ostree_stub containers_image_storage_stub' $DOCKER_PROXY --destination "${CI_REGISTRY_IMAGE}:latest"
   only:
     - master
 
