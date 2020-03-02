@@ -1,9 +1,9 @@
-FROM ubuntu:18.10 AS build
+FROM ubuntu:20.04 AS build
 
 RUN apt-get update -y \
  && apt-get install -y \
       golang git-core go-md2man \
-      libglib2.0-dev
+      libglib2.0-dev make
 
 ARG BUILDTAGS=""
 ENV GOPATH=/
