@@ -9,7 +9,7 @@ ARG BUILDTAGS=""
 ENV GOPATH=/
 RUN git clone --depth 1 https://github.com/containers/skopeo $GOPATH/src/github.com/containers/skopeo && \
     cd $GOPATH/src/github.com/containers/skopeo && \
-    make binary-local-static DISABLE_CGO=1 && \
+    make bin/skopeo DISABLE_CGO=1 && \
     mkdir -p /etc/containers && \
     cp default-policy.json /etc/containers/policy.json && \
     cp skopeo /skopeo && \
