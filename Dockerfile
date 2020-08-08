@@ -1,7 +1,7 @@
-FROM ubuntu:20.04 AS build
+FROM ubuntu:latest AS build
 
 RUN apt-get update -y \
- && apt-get install -y \
+ && DEBIAN_FRONTEND=noninteractive apt-get install -y \
       golang git-core go-md2man \
       libglib2.0-dev make
 
