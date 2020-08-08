@@ -12,8 +12,8 @@ RUN git clone --depth 1 https://github.com/containers/skopeo $GOPATH/src/github.
     make bin/skopeo DISABLE_CGO=1 && \
     mkdir -p /etc/containers && \
     cp default-policy.json /etc/containers/policy.json && \
-    cp skopeo /skopeo && \
-    ./skopeo --help
+    cp bin/skopeo /skopeo && \
+    /skopeo --help
 
 FROM frolvlad/alpine-glibc
 
