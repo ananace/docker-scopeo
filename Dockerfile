@@ -1,5 +1,4 @@
-<<<<<<< HEAD
-FROM ubuntu:22.04 AS build
+FROM docker.io/library/ubuntu:22.04 AS build
 
 RUN apt-get update -y \
  && apt-get install -y \
@@ -18,7 +17,7 @@ RUN set -x \
  && cp bin/skopeo /skopeo \
  && /skopeo --version
 
-FROM frolvlad/alpine-glibc
+FROM docker.io/frolvlad/alpine-glibc
 
 COPY --from=build /skopeo /skopeo
 COPY --from=build /etc/containers /etc/containers
