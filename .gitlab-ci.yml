@@ -5,15 +5,17 @@ stages:
 
 images:
   stage: build
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: []
+  image: quay.io/containers/buildah
   script:
-    - mkdir -p /root/.docker
-    - echo "{\"auths\":{\"${CI_REGISTRY}\":{\"username\":\"${CI_REGISTRY_USER}\",\"password\":\"${CI_JOB_TOKEN}\"}}}" > /root/.docker/config.json
-    - /kaniko/executor --context ${CI_PROJECT_DIR} --dockerfile Dockerfile $DOCKER_PROXY --destination "${CI_REGISTRY_IMAGE}:latest"
+    - buildah bud --tag "$CI_REGISTRY_IMAGE" --file "${CI_PROJECT_DIR}/Dockerfile" $CI_PROJECT_DIR
+    - buildah push --creds "${CI_REGISTRY_USER}:${CI_JOB_TOKEN}" "$CI_REGISTRY_IMAGE" "docker://${CI_REGISTRY_IMAGE}"
   only:
     - master
+  variables:
+    _BUILDAH_STARTED_IN_USERNS: ''
+    BUILDAH_ISOLATION: chroot
+    BUILDAH_FORMAT: docker
+    STORAGE_DRIVER: vfs
 
 promote:
   stage: promote
